@@ -10,3 +10,63 @@
 // c) determine a porcentagem de pessoas do sexo masculino que responderam que não
 // gostaram do produto.
 
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int N;
+
+    printf("Digite o numero de pessoas entrevistadas: ");
+    scanf("%d", &N);
+
+
+    char *sexo = (char *)malloc(N * sizeof(char));
+    char *opiniao = (char *)malloc(N * sizeof(char));
+
+    if (sexo == NULL || opiniao == NULL) {
+    printf("Erro\n");
+    return 1;
+    }
+
+
+    for (int i = 0; i < N; i++) {
+    printf("Resposta da pessoa %d:\n", i + 1);
+
+    printf("Sexo (M/F): ");
+    scanf(" %c", &sexo[i]);
+
+      
+    printf("Opiniao sobre o produto (gostou/nao gostou): ");
+    scanf(" %c", &opiniao[i]);
+    }
+
+  
+    int mulheresGostaram = 0;
+    int homensNaoGostaram = 0;
+
+    for (int i = 0; i < N; i++) {
+    if (sexo[i] == 'F' && opiniao[i] == 'g') {
+    mulheresGostaram++;
+    }
+    if (sexo[i] == 'M' && opiniao[i] == 'n') {
+    homensNaoGostaram++;
+    }
+    }
+
+    float porcentagemMulheresGostaram = (float)mulheresGostaram / N * 100;
+    float porcentagemHomensNaoGostaram = (float)homensNaoGostaram / N * 100;
+
+  
+    printf("\nResultados:\n");
+    printf("Porcentagem de mulheres que gostaram do produto: %.2f%%\n", porcentagemMulheresGostaram);
+    printf("Porcentagem de homens que não gostaram do produto: %.2f%%\n", porcentagemHomensNaoGostaram);
+
+
+    free(sexo);
+    free(opiniao);
+
+    return 0;
+}
+
+//OBS: Não consegui compilar o codigo.
+
