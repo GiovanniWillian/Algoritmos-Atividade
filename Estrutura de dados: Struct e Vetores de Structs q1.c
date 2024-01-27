@@ -1,126 +1,131 @@
-//1. Crie um tipo estruturado para armazenar dados de um funcion´ario. Uma estrutura deste tipo possui
-//os seguintes campos: nome, sal´ario, identificador e cargo.
-//a) Escreva uma fun¸c˜ao que receba como parˆametro o endere¸co de uma estrutura do tipo Funcionario
-//e preencha seus campos com valores fornecidos pelo usu´ario via teclado.
-//b) Escreva uma fun¸c˜ao que receba como parˆametro o endere¸co de uma estrutura do tipo Funcionario
+//Crie um tipo estruturado para armazenar dados de um funcionario. Uma estrutura deste tipo possui
+//os seguintes campos: nome, salario, identificador e cargo.
+//a) Escreva uma funcao que receba como parametro o endereco de uma estrutura do tipo Funcionario
+//e preencha seus campos com valores fornecidos pelo usuario via teclado.
+//b) Escreva uma funcao que receba como parametro o endereco de uma estrutura do tipo Funcionario
 //e imprima os valores dos seus campos.
-//c) Implemente uma fun¸c˜ao para realizar uma altera¸c˜ao no sal´ario de uma estrutura do tipo Funcionario.
-
-#include <stdio.h>
-
-struct funcionario {
-    char nome[50];
-    float salario;
-    int identificador;
-    char cargo[50];
-};
-
-void dados(struct funcionario *funcionario){
-
-    printf("Informe o nome do funcionario: ");
-    scanf("%s", funcionario->nome);
-
-    printf("Informe o salario do funcionario: ");
-    scanf("%f", &funcionario->salario);
-
-    printf("Informe o identificador do funcionario: ");
-    scanf("%d", &funcionario->identificador);
-
-    printf("Informe o cargo do funcionario: ");
-    scanf("%s", funcionario->cargo);
-
-    
-}
-
-void alt_salar(struct funcionario *funcionario, float novo_salar){
-
-printf("Informe o novo salario: ");
-scanf("%f", &novo_salar);
-    funcionario->salario = novo_salar;
-
-}
-
-int main() {
-   
-struct funcionario funcionario1;
-
-dados(&funcionario1);
-
-float novo_salar = 0;
-
-alt_salar(&funcionario1, novo_salar);
-
-    printf("\nDados do funcionario:\n");
-    printf("Nome: %s\n", funcionario1.nome);
-    printf("Salario: %.2f\n", funcionario1.salario);
-    printf("Identificador: %d\n", funcionario1.identificador);
-    printf("Cargo: %s\n", funcionario1.cargo);
-
-
-}  
-
+//c) Implemente uma funcao para realizar uma alteracao no salario de uma estrutura do tipo Funcionario.
 //d) Escreva uma funcao que receba como parametro um vetor de estruturas do tipo Funcionario e
 //imprima o cargo e salario do Funcionario com maior salario e o cargo e salario do funcionario
 //com o menor salario.
 
-#include <stdio.h>
 
-struct Funcionario {
-    char nome[50];
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct funcionario{
+    char nome[75];
     float salario;
     int identificador;
-    char cargo[50];
-};
+    char cargo[25];
+}Funcionario;
 
-void encontrarSalariosExtremos(struct Funcionario *funcionarios, int tamanho) {
-    if (tamanho <= 0) {
-        printf("Erro: O vetor de funcionarios esta vazio.\n");
-        return;
+void preenche_funcionario(Funcionario ** funcionarios, int *n);
+void imprimir_funcionarios(Funcionario * funcionarios, int n);
+void alterar_salario_funcionario(Funcionario ** funcionarios, int n);
+void imprimir_funcionario_maior_menor(Funcionario * funcionarios, int n);
+
+int main(void)
+{
+    Funcionario *funcionarios = (Funcionario *)malloc(sizeof(Funcionario));
+    if (funcionarios == NULL)
+    {
+        printf("ERRO");
+        exit(1);
     }
-
-    struct Funcionario maiorSalario = funcionarios[0];
-    struct Funcionario menorSalario = funcionarios[0];
-
-    for (int i = 1; i < tamanho; i++) {
-        if (funcionarios[i].salario > maiorSalario.salario) {
-            maiorSalario = funcionarios[i];
-        }
-
-        if (funcionarios[i].salario < menorSalario.salario) {
-            menorSalario = funcionarios[i];
-        }
+int qntfunc = 0;
+char controle;
+do
+{
+    printf("Menu\n");
+    printf("[1] Preencher funcionario\n");
+    printf("[2] Imprimir funcionarios\n");
+    printf("[3] Alterar salario\n");
+    printf("[4] Exibir maior e menor salario funcionarios\n");
+    printf("[0] Sair\n");
+    printf("Insira a opcao: ");
+    scanf(" %c", &controle);
+    switch (controle)
+    {
+    case '1':
+        preenche_funcionario(&funcionarios, &qntfunc);
+        break;
+    case '2':
+        imprimir_funcionarios(funcionarios, qntfunc);
+        break;
+    case '3':
+        alterar_salario_funcionario(&funcionarios, qntfunc);
+        break;
+    case '4':
+        imprimir_funcionario_maior_menor(funcionarios, qntfunc);
+        break;
+    case '0':
+        printf("Obrigado por utilizar o programa!\n");
+        break;
+    default:
+        printf("Entrada invalida\n");
+        break;
     }
-
-    printf("\nFuncionario com maior salario:\n");
-    printf("Cargo: %s\n", maiorSalario.cargo);
-    printf("Salario: %.2f\n", maiorSalario.salario);
-
-    printf("\nFuncionario com menor salario:\n");
-    printf("Cargo: %s\n", menorSalario.cargo);
-    printf("Salario: %.2f\n", menorSalario.salario);
+} while (controle != '0');
+return 0;
 }
 
-int main() {
-
-    int numFuncionarios = 3; 
-
-    struct Funcionario funcionarios[numFuncionarios];
-
-    for (int i = 0; i < numFuncionarios; i++) {
-        printf("\nInforme os dados do funcionario %d:\n", i + 1);
-        printf("Nome: ");
-        scanf("%s", funcionarios[i].nome);
-        printf("Salario: ");
-        scanf("%f", &funcionarios[i].salario);
-        printf("Identificador: ");
-        scanf("%d", &funcionarios[i].identificador);
-        printf("Cargo: ");
-        scanf("%s", funcionarios[i].cargo);
+void preenche_funcionario(Funcionario ** funcionarios, int *n){
+    *funcionarios = (Funcionario *)realloc((*funcionarios), (++(*n)+1) * sizeof(Funcionario));
+    if(*funcionarios == NULL)
+    {
+        printf("ERRO");
+        exit(1);
     }
-
-    encontrarSalariosExtremos(funcionarios, numFuncionarios);
-
-    return 0;
+    printf("Insira o nome do %d funcionario: ", *n);
+    scanf(" %[^\n]", (*funcionarios)[*n - 1].nome);
+    printf("Insira o salario do %d funcionario: ", *n);
+    scanf("%f", &(*funcionarios)[*n - 1].salario);
+    (*funcionarios)[*n - 1].identificador = (*n) + 1000;
+    printf("Insira o cargo do %d funcionario: ", *n);
+    scanf(" %[^\n]", (*funcionarios)[*n - 1].cargo);
 }
 
-//OBS: Fiz dois algoritmos porque não consegui fazer a função da letra (d) no mesmo.
+void imprimir_funcionarios(Funcionario * funcionarios, int n)
+{
+    for(int i = 0; i<n; i++)
+    {
+        printf("\nFuncionario %d\n", i + 1);
+        printf("Nome: %s\n", funcionarios[i].nome);
+        printf("Salario: %.1f\n", funcionarios[i].salario);
+        printf("Identificador: %d\n", funcionarios[i].identificador);
+        printf("Cargo: %s\n", funcionarios[i].cargo);
+    }
+}
+
+void alterar_salario_funcionario(Funcionario ** funcionarios, int n){
+    int idtf = 0;
+    printf("Qual o identificador do funcionario que deseja alterar? ");
+    scanf("%d", &idtf);
+    for (int i = 0; i < n; i++){
+        if((*funcionarios)[i].identificador == idtf){
+            printf("Insira o novo salario: \n");
+            scanf("%f", &(*funcionarios)[i].salario);
+            break;
+        }
+    }
+}
+
+void imprimir_funcionario_maior_menor(Funcionario * funcionarios, int n){
+    int menor = 0;
+    int maior = 0;
+
+    for(int i=0; i<n; i++)
+    {
+        if(funcionarios[i].salario<funcionarios[menor].salario)
+        {
+            menor = i;
+        }
+        if(funcionarios[i].salario>funcionarios[maior].salario)
+        {
+            maior = i;
+        }
+    }
+    printf("Maior salario: %.1f\n", funcionarios[maior].salario);
+    printf("Menor salario: %.1f\n", funcionarios[menor].salario);
+}
