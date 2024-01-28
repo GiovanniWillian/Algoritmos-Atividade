@@ -37,7 +37,7 @@ int main() {
 
       
     printf("Opiniao sobre o produto (gostou/nao gostou): ");
-    scanf(" %c", &opiniao[i]);
+    scanf(" %[^\n]", &opiniao[i]);
     }
 
   
@@ -45,10 +45,10 @@ int main() {
     int homensNaoGostaram = 0;
 
     for (int i = 0; i < N; i++) {
-    if (sexo[i] == 'F' && opiniao[i] == 'g') {
+    if (sexo[i] == 'F' && opiniao[i] == "gostou") {
     mulheresGostaram++;
     }
-    if (sexo[i] == 'M' && opiniao[i] == 'n') {
+    if (sexo[i] == 'M' && opiniao[i] == ("nao gostou")) {
     homensNaoGostaram++;
     }
     }
@@ -67,6 +67,5 @@ int main() {
 
     return 0;
 }
-
 //OBS: Não consegui compilar o codigo.
 
