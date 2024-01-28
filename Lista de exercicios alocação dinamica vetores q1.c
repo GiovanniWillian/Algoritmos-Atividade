@@ -67,5 +67,5 @@ int main() {
 
     return 0;
 }
-//OBS: Não consegui compilar o codigo.
+//OBS: O codigo compila, mas nao funciona.
 
