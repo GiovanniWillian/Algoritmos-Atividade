@@ -59,3 +59,4 @@ void ler_questoes(int n, int *questao[],char resp)
     }
 }
 
+//Não consegui fazer o algoritmo.
