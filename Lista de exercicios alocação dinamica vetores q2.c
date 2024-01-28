@@ -6,63 +6,56 @@
 //b) a porcentagem de aprovação, sabendo-se que a nota mínima para ser aprovado é 6.
 
 
-#include<stdio.h>
-#include<stdlib.h>
 
-float calcular_nota (int N_questoes, char* gabarito, char* R_aluno) {
-    float nota = 0;
-    for (int i = 0; i < N_questoes; i++) {
-        if (R_aluno[i] == gabarito[i]) {
-            nota += 10.0 / N_questoes;
-        }
-    }
-    return nota;
-}
+#include <stdio.h>
+#include <stdlib.h>
+void ler_questoes(int n, int *questao[],char resp);
 
 int main(void){
-    
-int N_questoes;
-    printf("Numero de questoes: ");
-    scanf("%d", &N_questoes);
-
-    char* gabarito = (char*)malloc(N_questoes * sizeof(char));
-
-    printf("Gabarito da prova: ");
-    scanf("%s", gabarito);
-
-    char** R_alunos = (char**)malloc(10 * sizeof(char*));
-
-    for (int i = 0; i < 10; i++) {
-        R_alunos[i] = (char*)malloc(N_questoes * sizeof(char));
-        printf("Respostas do aluno %d: ", i + 1);
-        scanf("%s", R_alunos[i]);
+    int *quest;
+    quest = (int*)malloc(sizeof(int));
+    if(quest == NULL){
+        printf("ERRO");
+        exit(1);
     }
-
-    printf("\nNotas dos alunos:\n");
-    for (int i = 0; i < 10; i++) {
-        float nota_aluno = calcular_nota(N_questoes, gabarito, R_alunos[i]);
-        printf("Nota do aluno %d: %.2f\n", i + 1, nota_aluno);
-    }
-
-    int aprovados = 0;
-    for (int i = 0; i < 10; i++) {
-        float nota_aluno = calcular_nota(N_questoes, gabarito, R_alunos[i]);
-        if (nota_aluno >= 6.0) {
-            aprovados++;
-        }
-    }
-
-    float porcentagem_aprovacao = (aprovados / 10.0) * 100.0;
-    printf("\nPorcentagem de aprovação: %.2f%%\n", porcentagem_aprovacao);
-
-    free(gabarito);
-    for (int i = 0; i < 10; i++) {
-        free(R_alunos[i]);
-    }
-    free(R_alunos);
-
+    int n =0;
+    char resp1;
+    ler_questoes(n, quest, resp1);
 
     return 0;
 }
 
-// O codigo compila, mas não é executado corretamente.
+void ler_questoes(int n, int *questao[],char resp)
+{
+    int i =0;
+    int questao1 =  *questao[i];
+    printf("Informe o numero de questoes\n");
+    scanf("%d", &n);
+    printf("Informe o gabarito de cada questao com respostas, 1=a, 2=b, 3=c, 4=d\n");
+    for(int i = 0; i < n; i++){
+        printf("Informe a resposta da questao %d \n", i + 1);
+        scanf("%d", questao[i]);
+        if(questao1 == 1)
+        {
+            getchar();
+            resp == 'a';
+        }
+        else
+        if(questao1==2)
+        {
+            resp == 'b';
+        }
+         else
+        if(questao1==3)
+        {
+            resp == 'c';
+        }
+         else
+        if(questao1==4)
+        {
+            resp == 'd';
+        }
+        printf("A resposta da questao %d e %c \n", i + 1, resp);
+    }
+}
+
